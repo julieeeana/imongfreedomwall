@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freedom Wall</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #eaf2e3; /* Matcha color */
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #6b8e23; /* Dark olive green */
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        form {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        textarea {
+            width: 70%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #6b8e23; /* Dark olive green */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #556b2f; /* Dark olive green - darker */
+        }
+        .messages {
+            list-style-type: none;
+            padding: 0;
+        }
+        .message {
+            position: relative;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f0fff0; /* Honeydew */
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .pin-checkbox {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Freedom Wall</h1>
+        <form id="messageForm">
+            <textarea id="messageInput" placeholder="Share your thoughts..." required></textarea>
+            <button type="submit">Post</button>
+        </form>
+        <ul id="messageList" class="messages">
+            <!-- Messages will be displayed here -->
+        </ul>
+    </div>
+
+    <script>
+        // Function to handle form submission
+        document.getElementById('messageForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+            var messageInput = document.getElementById('messageInput').value; // Get message input value
+            if (messageInput.trim() !== '') { // Check if message is not empty
+                var messageListItem = document.createElement('li'); // Create list item
+                messageListItem.className = 'message'; // Add class to list item
+                messageListItem.textContent = messageInput; // Set text content
+
+                var pinCheckbox = document.createElement('input'); // Create pin checkbox
+                pinCheckbox.type = 'checkbox';
+                pinCheckbox.className = 'pin-checkbox';
+                pinCheckbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        messageListItem.style.border = '2px solid #6b8e23'; // Highlight pinned messages
+                    } else {
+                        messageListItem.style.border = 'none'; // Remove highlight when unpinned
+                    }
+                });
+                messageListItem.appendChild(pinCheckbox); // Append pin checkbox to message list item
+
+                document.getElementById('messageList').appendChild(messageListItem); // Append list item to message list
+                document.getElementById('messageInput').value = ''; // Clear message input
+            } else {
+                alert('Please write something!'); // Alert user if message is empty
+            }
+        });
+    </script>
+</body>
+</html>
